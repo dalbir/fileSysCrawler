@@ -1,0 +1,16 @@
+{
+  "name": "filesyssearch",
+  "version": "1.0.0",
+  "description": "Smart File System Search Engine",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://harshankur@bitbucket.org/harshankur/filesyssearch.git"
+  },
+  "author": "Harsh Ankur",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/harshankur/filesyssearch#readme"
+}
