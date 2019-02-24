@@ -12,5 +12,11 @@
   },
   "author": "Harsh Ankur",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/harshankur/filesyssearch#readme"
+  "homepage": "https://bitbucket.org/harshankur/filesyssearch#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "form-data": "^2.3.3",
+    "klaw-sync": "^6.0.0",
+    "node-fetch": "^2.3.0"
+  }
 }
