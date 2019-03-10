@@ -1,25 +1,3 @@
-//Router Express Server at port 3000 used to transfer API request to tackle CORS errors
-
-//Get today's date
-function getTodayDate() {
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth()+1; //January is 0!
-    var yyyy = today.getFullYear();
-    
-    if(dd<10) {
-        dd = '0'+dd
-    } 
-    
-    if(mm<10) {
-        mm = '0'+mm
-    } 
-    
-    today = yyyy + '-' + mm + '-' + dd;
-    return today
-}
-
-
 const express = require('express')
 const klawSync = require('klaw-sync')
 const fetch = require('node-fetch')
@@ -41,20 +19,25 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 
+var crawlLocation = "files/";
 
-const files = klawSync('files/', {nodir: true});
-const dirs = klawSync('files/', {nofile: true});
-
-var filesList = [];
-var dirsList = [];
-
-for (var i = 0; i < files.length; i++) {
-    filesList.push(files[i].path);
+function crawl(location) {
+    files = klawSync(location, {nodir: true});
+    dirs = klawSync(location, {nofile: true});
+    
+    filesList = [];
+    dirsList = [];
+    
+    for (var i = 0; i < files.length; i++) {
+        filesList.push(files[i].path);
+    }
+    
+    for (var i = 0; i < dirs.length; i++) {
+        dirsList.push(dirs[i].path);
+    }
 }
 
-for (var i = 0; i < dirs.length; i++) {
-    dirsList.push(dirs[i].path);
-}
+crawl(crawlLocation);
 
 // console.log(filesList);
 // console.log(dirsList);
@@ -96,6 +79,16 @@ function gettext(pdfUrl){
 }
 
 
+app.post("/setCrawlLocation", async (req,res) => {
+    res.setHeader('Content-Type', 'application/json');
+	res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    console.log("request from client to set crawl locations");
+
+    crawlLocation = req.body.crawlLocation;
+    await crawl(crawlLocation);
+    res.send(`Success. New crawl location set to ${crawlLocation}`);
+})
 
     
 
@@ -140,7 +133,7 @@ app.post("/readImageFile", async (req,res) => {
     .then(result => console.log(result.text))
     .finally(result => res.send(result.text))
 })
-
+/*
 app.post("/readPDFFile", async (req,res) => {
     res.setHeader('Content-Type', 'application/json');
 	res.header("Access-Control-Allow-Origin", "*");
@@ -155,7 +148,7 @@ app.post("/readPDFFile", async (req,res) => {
     })
     .finally(result => res.send(result));
 })
-
+*/
 
 //Server listening at port 3000
 app.listen(3000, () => console.log('Example app listening on port 3000!'))
