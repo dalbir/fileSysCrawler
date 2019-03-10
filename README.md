@@ -18,7 +18,7 @@ The program starts running at port 3000.
 1. SET CRAWL LOCATION FOR THE APPLICATION TO OPERATE ON
 - verb: POST 
 - url: "localhost:3000/setCrawlLocation"
-- body: {"path": "<enter path name>"}
+- body: {"path": "\\\enter path name"}
 
 2. GET LIST OF FILES UNDER THE GIVEN FOLDER
 - verb: GET
@@ -31,9 +31,9 @@ The program starts running at port 3000.
 4. READ TEXT FILE DATA
 - verb: POST
 - url: "localhost:3000/readTextFile"
-- body: {"path": "<enter path name>"}
+- body: {"path": "\\\enter path name"}
 
 5. READ TEXT INSIDE IMAGE FILE
 - verb: POST
 - url: "localhost:3000/readImageFile"
-- body: {"path": "<enter path name>"}
+- body: {"path": "\\\enter path name"}
