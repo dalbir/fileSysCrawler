@@ -52,7 +52,7 @@ crawl(crawlLocation);
 
 // API Handler to get file data based on the query domain
 
-
+/*
 function gettext(pdfUrl){
     var pdf = PDFJS.getDocument(pdfUrl);
     return pdf.then(function(pdf) { // get all pages text
@@ -77,7 +77,7 @@ function gettext(pdfUrl){
         });
     });
 }
-
+*/
 
 app.post("/setCrawlLocation", async (req,res) => {
     res.setHeader('Content-Type', 'application/json');
