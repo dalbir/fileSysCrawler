@@ -1,4 +1,4 @@
-# fileSysSearch
+# fileSysCrawler
 
 This is a repository with a built in crawler and REST API interface for interacting with file system for the set location.
 
