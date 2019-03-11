@@ -18,7 +18,7 @@
     "form-data": "^2.3.3",
     "klaw-sync": "^6.0.0",
     "node-fetch": "^2.3.0",
-    "pdfjs-dist": "^2.0.943",
+    "pdf-parse": "^1.1.1",
     "tesseract.js": "^1.0.14"
   }
 }
