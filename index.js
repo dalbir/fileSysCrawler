@@ -72,39 +72,46 @@ app.get("/getDirsList", async (req,res) => {
     res.send(dirsList);
 })
 
+async function readTextFile(location) {
+    var myFileData = await fs.readFileSync(location, 'utf-8').toString();
+    return myFileData;
+}
+
 app.post("/readTextFile", async (req,res) => {
     res.setHeader('Content-Type', 'application/json');
 	res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     console.log("request from client for file data of " + req.body.path);
 
-    var myFileData = await fs.readFileSync(req.body.path, 'utf-8').toString();
-
-    res.send(myFileData);
+    res.send(readTextFile(req.body.path));
 })
+
+async function readImageFile(location) {
+    myImageData = "";
+    return Tesseract.recognize(location)
+    .progress(message => console.log(message))
+    .catch(err => console.error(err))
+    .then(result => console.log(result.text))
+    .finally((result) => {myImageData = result.text})
+}
 
 app.post("/readImageFile", async (req,res) => {
     res.setHeader('Content-Type', 'application/json');
 	res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     console.log("request from client for image data of " + req.body.path);
-
-    Tesseract.recognize(req.body.path)
-    .progress(message => console.log(message))
-    .catch(err => console.error(err))
-    .then(result => console.log(result.text))
-    .finally(result => res.send(result.text))
+    
+    readImageFile(req.body.path).then(() => {
+        res.send(myImageData);
+    })
 })
 
-app.post("/readPDFFile", async (req,res) => {
-    res.setHeader('Content-Type', 'application/json');
-	res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    console.log("request from client for text data of pdf file: " + req.body.path);
+async function readPDFFile(location) {
+    myPDFData = "";
 
-    var dataBuffer = fs.readFileSync(req.body.path);
+    var dataBuffer = fs.readFileSync(location);
  
-    pdf(dataBuffer).then(async function(data) {
+    return pdf(dataBuffer).then(async function(data) {
     
         // number of pages
         await console.log(data.numpages);
@@ -120,8 +127,19 @@ app.post("/readPDFFile", async (req,res) => {
         // PDF text
         await console.log(data.text); 
         
-        res.send(data.text);
+        myPDFData = await data.text;
     });
+}
+
+app.post("/readPDFFile", async (req,res) => {
+    res.setHeader('Content-Type', 'application/json');
+	res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    console.log("request from client for text data of pdf file: " + req.body.path);
+
+    readPDFFile(req.body.path).then(() => {
+        res.send(myPDFData);
+    })
 })
 
 
