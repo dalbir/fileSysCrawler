@@ -100,7 +100,7 @@ app.post("/readPDFFile", async (req,res) => {
     res.setHeader('Content-Type', 'application/json');
 	res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    console.log("request from client for image data of " + req.body.path);
+    console.log("request from client for text data of pdf file: " + req.body.path);
 
     var dataBuffer = fs.readFileSync(req.body.path);
  

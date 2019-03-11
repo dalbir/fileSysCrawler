@@ -37,3 +37,8 @@ The program starts running at port 3000.
 - verb: POST
 - url: "localhost:3000/readImageFile"
 - body: {"path": "\\\enter path name"}
+
+5. READ TEXT INSIDE PDF FILE
+- verb: POST
+- url: "localhost:3000/readPDFFile"
+- body: {"path": "\\\enter path name"}
