@@ -1,7 +1,7 @@
 {
   "name": "filesyscrawler",
   "version": "1.1.0",
-  "description": "Smart File System Crawler, text extractor and OCR",
+  "description": "File System Crawler helps read the file system info for any user selected folder. It also helps extract text from files including pdf files. It can also perform OCR on image files and extract legible texts from them. Support for reading many other popular formats are coming soon. Thank You for visiting",
   "main": "fileSysCrawler.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
