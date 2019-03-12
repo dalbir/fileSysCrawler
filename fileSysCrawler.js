@@ -35,8 +35,6 @@ function crawl(location) {
     }
 }
 
-crawl(crawlLocation);
-
 app.post("/setCrawlLocation", async (req,res) => {
     res.setHeader('Content-Type', 'application/json');
 	res.header("Access-Control-Allow-Origin", "*");
@@ -49,7 +47,6 @@ app.post("/setCrawlLocation", async (req,res) => {
 })
 
     
-
 app.get("/getFilesList", async (req,res) => {
     res.setHeader('Content-Type', 'application/json');
 	res.header("Access-Control-Allow-Origin", "*");
@@ -70,9 +67,11 @@ app.get("/getDirsList", async (req,res) => {
     res.send(dirsList);
 })
 
+var myTextFileData = "";
+
 async function readTextFile(location) {
-    var myFileData = await fs.readFileSync(location, 'utf-8').toString();
-    return myFileData;
+    myTextFileData = await fs.readFileSync(location, 'utf-8').toString();
+    return myTextFileData;
 }
 
 app.post("/readTextFile", async (req,res) => {
@@ -84,13 +83,14 @@ app.post("/readTextFile", async (req,res) => {
     res.send(readTextFile(req.body.path));
 })
 
+var myImageFileData = "";
+
 async function readImageFile(location) {
-    myImageData = "";
     return Tesseract.recognize(location)
     .progress(message => console.log(message))
     .catch(err => console.error(err))
     .then(result => console.log(result.text))
-    .finally((result) => {myImageData = result.text})
+    .finally((result) => {myImageFileData = result.text})
 }
 
 app.post("/readImageFile", async (req,res) => {
@@ -100,32 +100,32 @@ app.post("/readImageFile", async (req,res) => {
     console.log("request from client for image data of " + req.body.path);
     
     readImageFile(req.body.path).then(() => {
-        res.send(myImageData);
+        res.send(myImageFileData);
     })
 })
 
-async function readPDFFile(location) {
-    myPDFData = "";
+var myPDFFileData = "";
 
+async function readPDFFile(location) {
     var dataBuffer = fs.readFileSync(location);
  
     return pdf(dataBuffer).then(async function(data) {
     
-        // number of pages
-        await console.log(data.numpages);
-        // number of rendered pages
-        await console.log(data.numrender);
-        // PDF info
-        await console.log(data.info);
-        // PDF metadata
-        await console.log(data.metadata); 
-        // PDF.js version
-        // check https://mozilla.github.io/pdf.js/getting_started/
-        await console.log(data.version);
-        // PDF text
-        await console.log(data.text); 
+        // // number of pages
+        // await console.log(data.numpages);
+        // // number of rendered pages
+        // await console.log(data.numrender);
+        // // PDF info
+        // await console.log(data.info);
+        // // PDF metadata
+        // await console.log(data.metadata); 
+        // // PDF.js version
+        // // check https://mozilla.github.io/pdf.js/getting_started/
+        // await console.log(data.version);
+        // // PDF text
+        // await console.log(data.text); 
         
-        myPDFData = await data.text;
+        myPDFFileData = await data.text;
     });
 }
 
@@ -136,10 +136,27 @@ app.post("/readPDFFile", async (req,res) => {
     console.log("request from client for text data of pdf file: " + req.body.path);
 
     readPDFFile(req.body.path).then(() => {
-        res.send(myPDFData);
+        res.send(myPDFFileData);
     })
 })
 
 
-//Server listening at port 3000
-app.listen(3000, () => console.log('Example app listening on port 3000!'))
+
+function initiateREST() {
+    //Server listening at port 3001
+    app.listen(3001, () => console.log('Example app listening on port 3001!'))
+}
+
+module.exports = {
+    crawlLocation,
+    crawl,
+    filesList,
+    dirsList,
+    readTextFile,
+    readImageFile,
+    readPDFFile,
+    initiateREST,
+    myImageFileData,
+    myPDFFileData,
+    myTextFileData
+}

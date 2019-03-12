@@ -1,44 +1,141 @@
 # fileSysCrawler
 
-This is a repository with a built in crawler and REST API interface for interacting with file system for the set location.
 
-To setup, 
-1. clone the repository on your file system
-2. open terminal/cmd and go to the repository
-3. run "npm i" and wait for the dependent repositories to get installed
-4. run "node index.js" to execute the crawler
+This is a repository with a built in crawler and REST API interface for interacting with file system for the user-defined location.
+
+## Features!
+
+  - File System Crawler for user-defined location
+  - Extract text data from most UTF-8 encoded files, such as .txt, .md, .config, .xml, .html, .js, etc.
+  - Extract text data from pdf files
+  - Extract text from image files by performing OCR on them
+
+**Scroll below to find instructions to use it as a separate package (non-npm) with REST API interface**
 
 
-By default,
-crawling location is set at a folder "files" inside of the current repository.
-To change the crawling location, edit the value of the variable "crawlLocation" or follow the API interfaces.
+## Usage as npm package
+```sh
+npm i filesyscrawler
+```
+#### To import this repository to your project
 
-The program starts running at port 3000.
+```sh
+const fileSysCrawler = require("filesyscrawler");
+```
 
-1. SET CRAWL LOCATION FOR THE APPLICATION TO OPERATE ON
-- verb: POST 
-- url: "localhost:3000/setCrawlLocation"
-- body: {"path": "\\\enter path name"}
+#### To set crawl location
+```sh
+fileSysCrawler.crawlLocation = "<set desired crawl location>";
 
-2. GET LIST OF FILES UNDER THE GIVEN FOLDER
-- verb: GET
-- url: "localhost:3000/getFilesList"
+#eg. full path (for windows, use two "\" for folder heirarchy)
+fileSysCrawler.crawlLocation = "C:\\Users\\guest\\Desktop";
 
-3. GET LIST OF DIRECTORIES UNDER THE GIVEN FOLDER
-- verb: GET
-- url: "localhost:3000/getDirsList"
+#eg. relative path
+fileSysCrawler.crawlLocation = "/files";
+```
 
-4. READ TEXT FILE DATA
-- verb: POST
-- url: "localhost:3000/readTextFile"
-- body: {"path": "\\\enter path name"}
+#### To perform crawl
+```sh
+fileSysCrawler.crawl();
+```
 
-5. READ TEXT INSIDE IMAGE FILE
-- verb: POST
-- url: "localhost:3000/readImageFile"
-- body: {"path": "\\\enter path name"}
+#### After crawling, all the file names (no directories) in the crawl location are stored in filesList
+```sh
+fileSysCrawler.filesList
 
-6. READ TEXT INSIDE PDF FILE
-- verb: POST
-- url: "localhost:3000/readPDFFile"
-- body: {"path": "\\\enter path name"}
+#eg. to console log
+console.log(fileSysCrawler.filesList)
+```
+
+#### After crawling, all the directory names (no files) in the crawl location are stored in dirsList
+
+```sh
+fileSysCrawler.dirsList
+
+#eg. to console log
+console.log(fileSysCrawler.dirsList)
+```
+
+#### To get text from text based files
+
+```sh
+fileSysCrawler.readTextFile("<enter file location>")
+
+#eg. relative path
+fileSysCrawler.readTextFile("files/abc.txt");
+
+
+# the text data gets stored in myTextFileData
+fileSysCrawler.myTextFileData
+
+#eg. to console log
+console.log(fileSysCrawler.myTextFileData)
+```
+
+#### To get text from image files (perform OCR)
+
+```sh
+fileSysCrawler.readImageFile("<enter file location>")
+
+#eg. relative path
+fileSysCrawler.readImageFile("files/abc.jpg");
+
+
+# the text data gets stored in myImageFileData
+fileSysCrawler.myImageFileData
+
+#eg. to console log
+console.log(fileSysCrawler.myImageFileData)
+```
+
+#### To get text from pdf files
+
+```sh
+fileSysCrawler.readPDFFile("<enter file location>")
+
+#eg. relative path
+fileSysCrawler.readPDFFile("files/abc.pdf");
+
+
+# the text data gets stored in myPDFFileData
+fileSysCrawler.myPDFFileData
+
+#eg. to console log
+console.log(fileSysCrawler.myPDFFileData)
+```
+
+### To activate REST API Interface
+```sh
+fileSysCrawler.initiateREST();
+```
+
+## Usage as separate package with REST API interfaces
+
+1. Clone the repository on your file system
+2. Open terminal/cmd and go to the repository
+3. Run **"npm i"** and wait for the dependent repositories to get installed
+4. Edit **fileSysCrawler.js** and add **"initiateREST();"** command at the end of the file
+5. run **"node index.js"** to start the crawler
+
+
+### REST API interface definitions
+- Program starts running at port 3001 by default.
+- Perform /setCrawlLocation before any other /getFilesList or /getDirsList
+
+| Verb | API | Body |
+| ------ | ------ | ------ |
+| POST | /setCrawlLocation | "path"
+| GET | /getFilesList | 
+| GET | /getDirsList | 
+| POST | /readTextFile | "path"
+| POST | /readImageFile | "path"
+| POST | /readPDFFile | "path"
+
+
+License
+----
+
+MIT
+
+
+**Free Software, Hell Yeah!**
