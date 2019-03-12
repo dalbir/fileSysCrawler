@@ -18,13 +18,13 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 
 var crawlLocation = "files/";
+var filesList = [];
+var dirsList = [];
 
 function crawl(location) {
     files = klawSync(location, {nodir: true});
     dirs = klawSync(location, {nofile: true});
     
-    filesList = [];
-    dirsList = [];
     
     for (var i = 0; i < files.length; i++) {
         filesList.push(files[i].path);
@@ -140,11 +140,11 @@ app.post("/readPDFFile", async (req,res) => {
     })
 })
 
-
+var RESTPortNumber = 3000;
 
 function initiateREST() {
     //Server listening at port 3001
-    app.listen(3001, () => console.log('Example app listening on port 3001!'))
+    app.listen(RESTPortNumber, () => console.log(`Example app listening on port ${RESTPortNumber}!`));
 }
 
 module.exports = {
@@ -155,6 +155,7 @@ module.exports = {
     readTextFile,
     readImageFile,
     readPDFFile,
+    RESTPortNumber,
     initiateREST,
     myImageFileData,
     myPDFFileData,

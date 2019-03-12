@@ -109,6 +109,14 @@ console.log(fileSysCrawler.myPDFFileData)
 fileSysCrawler.initiateREST();
 ```
 
+### The default REST API port number is 3000
+```sh
+#in case port 3000 (the default port) is in use, you can set the port number manually before initiating REST API interface above
+fileSysCrawler.RESTPortNumber = <port number>
+#eg. to set to port number 8080
+fileSysCrawler.RESTPortNumber = 8080
+```
+
 ## Usage as separate package with REST API interfaces
 
 1. Clone the repository on your file system
@@ -119,7 +127,7 @@ fileSysCrawler.initiateREST();
 
 
 ### REST API interface definitions
-- Program starts running at port 3001 by default.
+- Program starts running at port 3000 by default.
 - Perform /setCrawlLocation before any other /getFilesList or /getDirsList
 
 | Verb | API | Body |
