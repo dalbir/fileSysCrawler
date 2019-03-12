@@ -1,9 +1,7 @@
 const express = require('express')
 const klawSync = require('klaw-sync')
-const fetch = require('node-fetch')
 const pdf = require('pdf-parse');           // pdf parse
 const Tesseract = require('tesseract.js')
-const FormData = require('form-data')       // create form-data
 const fs = require('fs')                    // fileSream read
 const app = express()
 
