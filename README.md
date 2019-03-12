@@ -104,12 +104,12 @@ fileSysCrawler.myPDFFileData
 console.log(fileSysCrawler.myPDFFileData)
 ```
 
-### To activate REST API Interface
+#### To activate REST API Interface
 ```sh
 fileSysCrawler.initiateREST();
 ```
 
-### The default REST API port number is 3000
+#### The default REST API port number is 3000
 ```sh
 #in case port 3000 (the default port) is in use, you can set the port number manually before initiating REST API interface above
 fileSysCrawler.RESTPortNumber = <port number>
