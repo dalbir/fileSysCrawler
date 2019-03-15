@@ -1,4 +1,4 @@
-# fileSysCrawler
+# File System Crawler
 
 
 This is a repository with a built in crawler and REST API interface for interacting with file system for the user-defined location.
@@ -123,7 +123,7 @@ fileSysCrawler.RESTPortNumber = 8080
 2. Open terminal/cmd and go to the repository
 3. Run **"npm i"** and wait for the dependent repositories to get installed
 4. Edit **fileSysCrawler.js** and add **"initiateREST();"** command at the end of the file
-5. run **"node index.js"** to start the crawler
+5. run **"node fileSysCrawler.js"** to start the crawler
 
 
 ### REST API interface definitions
