@@ -1,7 +1,7 @@
 # File System Crawler
 
 
-This is a repository with a built in crawler and REST API interface for interacting with file system for the user-defined location.
+This is a file system crawler with REST API interface for interacting with file system for any user-defined location.
 
 ## Features!
 
@@ -9,6 +9,7 @@ This is a repository with a built in crawler and REST API interface for interact
   - Extract text data from most UTF-8 encoded files, such as .txt, .md, .config, .xml, .html, .js, etc.
   - Extract text data from pdf files
   - Extract text from image files by performing OCR on them
+  - Extract text data from office files, such as .docx, .pptx, .xlsx, .odt, .odp, .ods
 
 **Scroll below to find instructions to use it as a separate package (non-npm) with REST API interface**
 
@@ -56,52 +57,26 @@ fileSysCrawler.dirsList
 console.log(fileSysCrawler.dirsList)
 ```
 
-#### To get text from text based files
+#### To get text from any file
 
 ```sh
-fileSysCrawler.readTextFile("<enter file location>")
+fileSysCrawler.parseFile("/path/to/file", function(data){
+	// "data" string in the callback here is the text parsed from the file passed in the first argument above
+	console.log(data)
+})
 
-#eg. relative path
-fileSysCrawler.readTextFile("files/abc.txt");
+#Eg. Absolute Path
+fileSysCrawler.parseFile("C:\\Users\\Harsh\\files\\abcd.docx", function(data){
+	// "data" string in the callback here is the text parsed from the file passed in the first argument above
+	console.log(data)
+})
 
+#Eg. Relative Path
+fileSysCrawler.parseFile("files/xyzd.jpg", function(data){
+	// "data" string in the callback here is the text parsed from the file passed in the first argument above
+	console.log(data)
+})
 
-# the text data gets stored in myTextFileData
-fileSysCrawler.myTextFileData
-
-#eg. to console log
-console.log(fileSysCrawler.myTextFileData)
-```
-
-#### To get text from image files (perform OCR)
-
-```sh
-fileSysCrawler.readImageFile("<enter file location>")
-
-#eg. relative path
-fileSysCrawler.readImageFile("files/abc.jpg");
-
-
-# the text data gets stored in myImageFileData
-fileSysCrawler.myImageFileData
-
-#eg. to console log
-console.log(fileSysCrawler.myImageFileData)
-```
-
-#### To get text from pdf files
-
-```sh
-fileSysCrawler.readPDFFile("<enter file location>")
-
-#eg. relative path
-fileSysCrawler.readPDFFile("files/abc.pdf");
-
-
-# the text data gets stored in myPDFFileData
-fileSysCrawler.myPDFFileData
-
-#eg. to console log
-console.log(fileSysCrawler.myPDFFileData)
 ```
 
 #### To activate REST API Interface
@@ -134,11 +109,67 @@ fileSysCrawler.RESTPortNumber = 8080
 | ------ | ------ | ------ |
 | POST | /setCrawlLocation | "path"
 | GET | /getFilesList | 
+| GET | /getCrawlLocation | 
 | GET | /getDirsList | 
-| POST | /readTextFile | "path"
-| POST | /readImageFile | "path"
-| POST | /readPDFFile | "path"
+| POST | /parseFile | "path"
 
+
+### Example
+#### 1. Set Crawl Location
+
+REQUEST
+
+```sh
+POST http://localhost:3000/setCrawlLocation 
+
+body
+{
+	"crawlLocation": "files/"
+}
+```
+
+RESPONSE
+
+```sh
+Success. New crawl location set to files/
+```
+
+#### 2. Get Files List
+REQUEST
+
+```sh
+GET http://localhost:3000/getFilesList
+```
+
+RESPONSE
+
+```sh
+[
+    "C:\\Users\\Harsh\\files\\abcd.docx",
+	"C:\\Users\\Harsh\\files\\xyzd.png"
+]
+```
+
+#### 3. Parse file
+REQUEST
+
+```sh
+POST http://localhost:3000/parseFile
+
+body
+{
+	"path":  "C:\\Users\\Harsh\\files\\abcd.docx"
+}
+
+```
+
+RESPONSE
+
+```sh
+{
+    "data": "This is a sample document made to parse text from"
+}
+```
 
 License
 ----
