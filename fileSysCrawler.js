@@ -103,9 +103,9 @@ var RESTPortNumber = 3000;
 
 //////   CHANGE REST PORT NUMBER ABOVE
 
-// function initiateREST() {
+function initiateREST() {
     app.listen(RESTPortNumber, () => console.log(`File Sys Crawler listening on port ${RESTPortNumber}!`));
-// }
+}
 
 module.exports = {
     crawlLocation,
@@ -113,5 +113,5 @@ module.exports = {
     filesList,
     dirsList,
     parseFile,
-    // initiateREST
+    initiateREST
 }
