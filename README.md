@@ -10,6 +10,7 @@ This is a file system crawler with REST API interface for interacting with file 
   - Extract text data from pdf files
   - Extract text from image files by performing OCR on them
   - Extract text data from office files, such as .docx, .pptx, .xlsx, .odt, .odp, .ods
+  - Set location for decompressing office files in places with restricted write access for nodeJS
 
 **Scroll below to find instructions to use it as a separate package (non-npm) with REST API interface**
 
@@ -70,6 +71,14 @@ fileSysCrawler.parseFile("C:\\Users\\Harsh\\files\\abcd.docx", function(data){
 	// "data" string in the callback here is the text parsed from the file passed in the first argument above
 	console.log(data)
 })
+
+#Optionally change decompression location for office Files at persionalised locations for environments with restricted write access
+
+// Put this file before parseOffice method to take effect.
+fileSysCrawler.setDecompressionLocation("/tmp");  // New decompression location would be "/tmp/officeDist"
+
+// P.S.: Setting location on a Windows environment with '\' heirarchy requires to be entered twice '\\'
+fileSysCrawler.setDecompressionLocation("C:\\tmp");  // New decompression location would be "C:\tmp\officeDist"
 
 #Eg. Relative Path
 fileSysCrawler.parseFile("files/xyzd.jpg", function(data){

@@ -107,11 +107,19 @@ function initiateREST() {
     app.listen(RESTPortNumber, () => console.log(`File Sys Crawler listening on port ${RESTPortNumber}!`));
 }
 
+// #region setDecompressionLocation
+function setDecompressionLocation(newLocation) {
+    anyFileParser.setDecompressionLocation(newLocation);
+}
+
+// #endregion setDecompressionLocation
+
 module.exports = {
     crawlLocation,
     crawl,
     filesList,
     dirsList,
     parseFile,
-    initiateREST
+    initiateREST,
+    setDecompressionLocation
 }
